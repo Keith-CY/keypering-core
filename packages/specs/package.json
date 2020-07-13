@@ -1,0 +1,27 @@
+{
+  "name": "@keypering/specs",
+  "version": "0.1.0",
+  "description": "keypering protocol specifications",
+  "keywords": [
+    "keypering",
+    "keyper",
+    "api",
+    "specifications"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/liusong1111/keypering-core"
+  },
+  "license": "MIT",
+  "main": "lib",
+  "directories": {
+    "lib": "lib"
+  },
+  "types": "types",
+  "scripts": {
+    "build": "tsc"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
