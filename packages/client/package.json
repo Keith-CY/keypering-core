@@ -17,11 +17,17 @@
   "directories": {
     "lib": "lib"
   },
+  "files": [
+    "lib/index.js"
+  ],
   "types": "types",
   "scripts": {
     "build": "tsc"
   },
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "@keypering/specs": "^0.1.0"
   }
 }

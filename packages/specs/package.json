@@ -12,8 +12,11 @@
     "type": "git",
     "url": "https://github.com/liusong1111/keypering-core"
   },
+  "files": [
+    "lib"
+  ],
   "license": "MIT",
-  "main": "lib",
+  "main": "lib/index.js",
   "directories": {
     "lib": "lib"
   },

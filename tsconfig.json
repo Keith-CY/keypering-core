@@ -8,9 +8,12 @@
     "experimentalDecorators": true,
     "preserveConstEnums": true,
     "skipLibCheck": true,
-    "resolveJsonModule": true,
     "esModuleInterop": true,
     "isolatedModules": true,
+    "baseUrl": ".",
+    "paths": {
+      "@keypering/*": ["packages/*/src"]
+    },
 
     "strict": true,
     "alwaysStrict": true,
