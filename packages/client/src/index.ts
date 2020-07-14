@@ -14,7 +14,7 @@ import {
   Transaction
 } from "@keypering/specs";
 
-export class KeyperingClient {
+export default class KeyperingClient {
   private ws: WebSocket;
   private ready: Promise<any>;
   private token: string | null;
