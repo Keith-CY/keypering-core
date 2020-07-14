@@ -6,7 +6,13 @@
     "outDir": "lib/",
     "lib": [
       "dom"
-    ]
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@keypering/*": [
+        "packages/*/src"
+      ]
+    }
   },
   "include": [
     "src"
