@@ -23,7 +23,7 @@
   "types": "types",
   "scripts": {
     "compile": "tsc",
-    "clean": "rimraf -rf ./lib",
+    "clean": "rimraf -rf ./lib && rimraf -rf ./types",
     "prepublishOnly": "yarn build"
   },
   "publishConfig": {
