@@ -17,13 +17,13 @@
   ],
   "license": "MIT",
   "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "directories": {
     "lib": "lib"
   },
-  "types": "types",
   "scripts": {
     "compile": "tsc",
-    "clean": "rimraf -rf ./lib && rimraf -rf ./types",
+    "clean": "rimraf -rf ./lib",
     "prepublishOnly": "yarn build"
   },
   "publishConfig": {

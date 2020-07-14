@@ -13,17 +13,17 @@
     "url": "https://github.com/liusong1111/keypering-core"
   },
   "license": "MIT",
-  "main": "lib",
   "directories": {
     "lib": "lib"
   },
   "files": [
-    "lib/index.js"
+    "lib"
   ],
-  "types": "types",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "compile": "tsc",
-    "clean": "rimraf -rf ./lib && rimraf -rf ./types",
+    "clean": "rimraf -rf ./lib",
     "prepublishOnly": "yarn build"
   },
   "publishConfig": {
