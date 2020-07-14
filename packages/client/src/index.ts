@@ -11,7 +11,7 @@ import {
   SignSendParams,
   SignSendResult,
   SignConfig,
-  Transaction
+  Transaction, Hash256
 } from "@keypering/specs";
 
 export default class KeyperingClient {
@@ -133,11 +133,12 @@ export default class KeyperingClient {
     return result.liveCells;
   };
 
-  signSendTransaction = async (description: string, tx: Transaction, config?: SignConfig): Promise<SignSendResult> => {
+  signSendTransaction = async (description: string, tx: Transaction, lockHash: Hash256, config?: SignConfig): Promise<SignSendResult> => {
     const params: SignSendParams = {
       token: this.checkToken(),
       description,
       tx,
+      lockHash,
       config: config ?? {index: 0, length: -1},
     };
     const result = await this.perform("sign_send", params);

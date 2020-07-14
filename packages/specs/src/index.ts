@@ -137,6 +137,7 @@ export interface SignSendParams {
   token: string;
   description: string;
   tx: Transaction;
+  lockHash: Hash256;
   config?: SignConfig;
 }
 
