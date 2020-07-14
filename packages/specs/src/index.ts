@@ -124,7 +124,7 @@ export type QueryLiveCellsResponse = JsonRpcResponse<QueryLiveCellsResult, Query
 
 export type FnQueryLiveCells = (request: QueryLiveCellsRequest) => Promise<QueryLiveCellsResponse>;
 
-// sign_and_send
+// sign_send
 export interface SignConfig {
   index: number;
   length: number;
@@ -133,23 +133,23 @@ export interface SignConfig {
 export type Transaction = any;
 export type SignedTransaction = any;
 
-export interface SignAndSendParams {
+export interface SignSendParams {
   token: string;
   description: string;
   tx: Transaction;
   config?: SignConfig;
 }
 
-export interface SignAndSendResult {
+export interface SignSendResult {
   tx: SignedTransaction;
   txHash: Hash256;
 }
 
-export type SignAndSendError = typeof ErrorRejected | typeof ErrorInvalidToken;
+export type SignSendError = typeof ErrorRejected | typeof ErrorInvalidToken;
 
-export type SignAndSendRequest = JsonRpcRequest<SignAndSendParams>;
+export type SignSendRequest = JsonRpcRequest<SignSendParams>;
 
-export type SignAndSendResponse = JsonRpcResponse<SignAndSendRequest, SignAndSendError>;
+export type SignSendResponse = JsonRpcResponse<SignSendRequest, SignSendError>;
 
-export type FnSignAndSend = (request: SignAndSendRequest) => Promise<SignAndSendResponse>;
+export type FnSignSend = (request: SignSendRequest) => Promise<SignSendResponse>;
 

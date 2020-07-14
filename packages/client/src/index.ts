@@ -8,8 +8,8 @@ import {
   QueryAddressesResult,
   QueryLiveCellsParams,
   QueryLiveCellsResult,
-  SignAndSendParams,
-  SignAndSendResult,
+  SignSendParams,
+  SignSendResult,
   SignConfig,
   Transaction
 } from "@keypering/specs";
@@ -93,14 +93,7 @@ export default class KeyperingClient {
     promise.reject(error);
   };
 
-  perform = async (method: string, params: any, withToken: boolean = true): Promise<any> => {
-    if (withToken) {
-      const token = this.token;
-      if (!token) {
-        throw ErrorInvalidToken;
-      }
-      params.token = token;
-    }
+  perform = async (method: string, params: any): Promise<any> => {
     const id = new Date().getTime().toString();
     const request: JsonRpcRequest<any> = {
       id,
@@ -115,18 +108,20 @@ export default class KeyperingClient {
   };
 
   checkToken = (): string => {
-    if(!this.token) {
+    if (!this.token) {
       throw ErrorInvalidToken;
     }
     return this.token!;
   };
 
   requestAuth = async (params: AuthRequest): Promise<AuthResult> => {
-    return await this.perform("auth", params, false);
+    return await this.perform("auth", params);
   };
 
   queryAddresses = async (): Promise<QueryAddressesResult> => {
-    return await this.perform("query_addresses", {}, true);
+    return await this.perform("query_addresses", {
+      token: this.checkToken(),
+    });
   };
 
   queryLiveCells = async (lockHash: string): Promise<QueryLiveCellsResult> => {
@@ -134,18 +129,18 @@ export default class KeyperingClient {
       token: this.checkToken(),
       lockHash,
     };
-    const result = await this.perform("query_live_cells", params, true);
+    const result = await this.perform("query_live_cells", params);
     return result.liveCells;
   };
 
-  signAndSendTransaction = async (description: string, tx: Transaction, config?: SignConfig): Promise<SignAndSendResult> => {
-    const params: SignAndSendParams = {
+  signSendTransaction = async (description: string, tx: Transaction, config?: SignConfig): Promise<SignSendResult> => {
+    const params: SignSendParams = {
       token: this.checkToken(),
       description,
       tx,
       config: config ?? {index: 0, length: -1},
     };
-    const result = await this.perform("sign_and_send", params, true);
+    const result = await this.perform("sign_send", params);
     return result;
   };
 }
