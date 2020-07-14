@@ -114,6 +114,13 @@ export class KeyperingClient {
     return await promise;
   };
 
+  checkToken = (): string => {
+    if(!this.token) {
+      throw ErrorInvalidToken;
+    }
+    return this.token!;
+  };
+
   requestAuth = async (params: AuthRequest): Promise<AuthResult> => {
     return await this.perform("auth", params, false);
   };
@@ -124,7 +131,7 @@ export class KeyperingClient {
 
   queryLiveCells = async (lockHash: string): Promise<QueryLiveCellsResult> => {
     let params: QueryLiveCellsParams = {
-      token: this.token,
+      token: this.checkToken(),
       lockHash,
     };
     const result = await this.perform("query_live_cells", params, true);
@@ -133,7 +140,7 @@ export class KeyperingClient {
 
   signAndSendTransaction = async (description: string, tx: Transaction, config?: SignConfig): Promise<SignAndSendResult> => {
     const params: SignAndSendParams = {
-      token: this.token,
+      token: this.checkToken(),
       description,
       tx,
       config: config ?? {index: 0, length: -1},
