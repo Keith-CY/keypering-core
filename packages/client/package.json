@@ -22,12 +22,17 @@
   ],
   "types": "types",
   "scripts": {
-    "build": "tsc"
+    "compile": "tsc",
+    "clean": "rimraf -rf ./lib",
+    "prepublishOnly": "yarn build"
   },
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
     "@keypering/specs": "^0.1.0"
+  },
+  "devDependencies": {
+    "rimraf": "^3.0.2"
   }
 }

@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES2020",
     "module": "ESNext",
-    "moduleResolution": "classic",
+    "moduleResolution": "node",
     "allowJs": true,
     "disableSizeLimit": true,
     "experimentalDecorators": true,
@@ -24,5 +24,9 @@
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "strictFunctionTypes": true
-  }
+  },
+  "exclude": [
+    "node_modules",
+    "lib"
+  ]
 }

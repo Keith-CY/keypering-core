@@ -10,7 +10,7 @@
   },
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "postinstall": "npm run bootstrap",
+    "postinstall": "yarn run bootstrap",
     "clean": "lerna run clean",
     "build": "lerna run build",
     "pub": "lerna publish"
