@@ -22,7 +22,7 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "compile": "tsc",
+    "build": "tsc",
     "clean": "rimraf -rf ./lib",
     "prepublishOnly": "yarn build"
   },
@@ -34,5 +34,6 @@
   },
   "devDependencies": {
     "rimraf": "^3.0.2"
-  }
+  },
+  "gitHead": "ff90f7e7a9c359edc50c3fc9afe03a120ab263f2"
 }
