@@ -27,5 +27,8 @@
   },
   "bugs": {
     "url": "https://github.com/liusong1111/keypering-core/issues"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
