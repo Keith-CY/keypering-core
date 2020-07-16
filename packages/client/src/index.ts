@@ -124,10 +124,11 @@ export default class KeyperingClient {
     });
   };
 
-  queryLiveCells = async (lockHash: string): Promise<QueryLiveCellsResult> => {
+  queryLiveCells = async (lockHash: string, withData: boolean = false): Promise<QueryLiveCellsResult> => {
     let params: QueryLiveCellsParams = {
       token: this.checkToken(),
       lockHash,
+      withData,
     };
     const result = await this.perform("query_live_cells", params);
     return result.liveCells;

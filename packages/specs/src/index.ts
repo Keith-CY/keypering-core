@@ -61,14 +61,34 @@ export interface Script {
   args: Bytes;
 }
 
-export interface Address {
+export type DepType = "code" | "depGroup";
+
+export interface OutPoint {
+  txHash: Hash256;
+  index: string;
+}
+
+export interface CellDep {
+  outPoint: OutPoint | null;
+  depType: DepType;
+}
+
+export interface LockScriptMeta {
+  name: string;
+  cellDeps: CellDep[];
+  headerDeps?: Hash256[];
+}
+
+export interface AddressInfo {
   address: string;
   lockHash: string;
-  lockScriptName: string;
+  lockScriptMeta: LockScriptMeta;
   lockScript: Script;
 }
 
-export type QueryAddressesResult = Address[];
+export interface QueryAddressesResult {
+  addresses: AddressInfo[];
+}
 
 export type QueryAddressesError = typeof ErrorRejected | typeof ErrorInvalidToken;
 
@@ -83,7 +103,7 @@ export type FnQueryAddresses = (request: QueryAddressesRequest) => Promise<Query
 export interface QueryLiveCellsParams {
   token: string;
   lockHash: string;
-  returnData?: boolean;
+  withData?: boolean;
 }
 
 export interface CellOutput {
