@@ -1,6 +1,6 @@
 Keypering是个新的尝试，定位是一个架设在Keyper之上的桌面型轻量钱包，用于和dApp交互，可以理解成Keyper Scatter的翻版。
 
-关于Keyper Scatter，以及Keyper Scatter与dApp的交互方式，请阅读[这篇文章](https://talk.nervos.org/t/keyper-scatter-dapp/4430)。当前Keypering还在初期开发中，[UI初版地址](https://github.com/liusong1111/keypering-ui)。
+关于Keyper Scatter，以及Keyper Scatter与dApp的交互方式，请阅读[这篇文章](https://talk.nervos.org/t/keyper-scatter-dapp/4430)。当前Keypering还在开发中，[git repository](https://github.com/liusong1111/keypering)。
 
 本文重点描述Keypering和dApp的交互协议，欢迎大家提意见。
 
