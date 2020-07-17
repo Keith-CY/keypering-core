@@ -24,13 +24,13 @@ token:  64 byte string。当Auth请求授权成功后，Keypering返回token，d
 
 ```json
 {
-    "id": 2,
-    "jsonrpc": "2.0",
-    "method": "auth",
-    "params": {
-        "origin": "http://demo.ckb.dapp",
-        "description": "a dApp demo"
-    }
+  "id": 2,
+  "jsonrpc": "2.0",
+  "method": "auth",
+  "params": {
+    "url": "http://demo.ckb.dapp",
+    "description": "a dApp demo"
+  }
 }
 ```
 
@@ -38,11 +38,11 @@ token:  64 byte string。当Auth请求授权成功后，Keypering返回token，d
 
 ```json
 {
-    "id": 2,
-    "jsonrpc": "2.0",
-    "result": {
-        "token": "xxxxxxxxxxxxxxxxxxxx"
-    }
+  "id": 2,
+  "jsonrpc": "2.0",
+  "result": {
+    "token": "xxxxxxxxxxxxxxxxxxxx"
+  }
 }
 ```
 
@@ -52,29 +52,29 @@ token:  64 byte string。当Auth请求授权成功后，Keypering返回token，d
 
     ```json
     {
-        "id": 2,
-        "jsonrpc": "2.0",
-        "error": {
-            "code": 1,
-            "message": "declined"
+      "id": 2,
+      "jsonrpc": "2.0",
+      "error": {
+        "code": 1,
+        "message": "rejected"
       }
     }
     ```
   
   * 当用户关闭Keypering，或不理Keypering UI的提示，这时Keypering不会回应任何内容。dApp应能正常处理这种情况，比如引入超时机制
 
-### Query Locks
+### Query Addresses
 
 - Request
 
 ```json
 {
-    "id": 2,
-    "jsonrpc": "2.0",
-    "method": "query_locks",
-    "params": {
-        "token": "xxxxxxxxxxxxxxxxxxxx"
-    }
+  "id": 2,
+  "jsonrpc": "2.0",
+  "method": "query_addresses",
+  "params": {
+    "token": "xxxxxxxxxxxxxxxxxxxx"
+  }
 }
 ```
 
@@ -82,17 +82,33 @@ token:  64 byte string。当Auth请求授权成功后，Keypering返回token，d
 
 ```json
 {
-    "id": 2,
-    "jsonrpc": "2.0",
-    "result": {
-        "locks": [
+  "id": 2,
+  "jsonrpc": "2.0",
+  "result": {
+    "addresses": [
+      {
+        "address": "XXXXXXXXXXXXXXXX",
+        "lockHash": "XXXXXXXXXXXXXXXX",
+        "lockScript": {
+          "codeHash": "XXXXXXXXXXXXXXXX",
+          "hashType": "XXXXXXXXXXXXXXXX",
+          "args": "XXXXXXXXXXXXXXXX"
+        },
+        "lockScriptMeta": {
+          "name": "Secp256k1",
+          "cellDeps": [
             {
-                "code_hash": "0x9bd7e06f3ecf4be0f2fcd2188b23f1b9fcc88e5d4b65a8637b17723bbda3cce8",
-                "hash_type": "type",
-                "args": "0x8211f1b938a107cd53b6302cc752a6fc3965638d"
+              "outPoint": {
+                "txHash": "XXXXXXXXXXXXXXXX",
+                "index": "0x0"
+              },
+              "depType": "XXXXXXXXXXXXXXXX"
             }
-        ]
-    }
+          ]
+        }
+      }
+    ]
+  }
 }
 ```
 
@@ -102,20 +118,75 @@ token:  64 byte string。当Auth请求授权成功后，Keypering返回token，d
 
     ```json
     {
-        "id": 2,
-        "jsonrpc": "2.0",
-        "error": {
-            "code": 2,
-            "message": "invalid_token"
-        }
+      "id": 2,
+      "jsonrpc": "2.0",
+      "error": {
+        "code": 2,
+        "message": "invalid_token"
+      }
     }
     ```
 
-### Sign
+### Query Live Cells
+查询指定地址的live cells。
 
-签名交易。
+- Request
 
-当dApp组装好交易，通过本接口请求签名，Keypering会在UI上展示交易信息，用户签名后，Keypering会返回包含签名的交易信息。
+lockHash是要查询的指定地址的lockHash，withData为true时，返回结果才包含cell的data字段。无论withData为何值，返回结果中outputDateLen总会有值
+
+
+```json
+{
+  "id": "2",
+  "jsonrpc": "2.0",
+  "method": "query_live_cells",
+  "params": {
+    "token": "XXXXXXXXXXXXXXXX",
+    "lockHash": "XXXXXXXXXXXXXXXX",
+    "withData": true
+  }
+}
+```
+
+- Response
+```json
+{
+  "id": 2,
+  "jsonrpc": "2.0",
+  "result": {
+    "liveCells": [
+      {
+        "cellOutput": {
+          "capacity": "0x1c4fecc00",
+          "lock": {
+            "args": "0xXXXXXXXX",
+            "codeHash": "0xXXXXXXXX",
+            "hashType": "type"
+          },
+          "type": null
+        },
+        "cellbase": false,
+        "createdBy": {
+          "blockNumber": "0xXXXXXXXX",
+          "index": "0x0",
+          "txHash": "0xXXXXXXXX"
+        },
+        "outputDataLen": "0xXXXXXXXX",
+        "data": {
+          "content": "0xXXXXXXXX",
+          "hash": "0xXXXXXXXX"
+        }
+      }
+    ]
+  }
+}
+```
+
+### Sign and Send
+
+签名并发送交易。
+
+当dApp组装好交易，通过本接口请求签名，Keypering会在UI上展示交易信息，用户签名后，Keypering签名并发送交易。
 
 - Request
 
@@ -123,19 +194,19 @@ config是可选的，默认值 `{"index": 0, "length": -1}` 代表全签。
 
 ```json
 {
-    "id": 2,
-    "jsonrpc": "2.0",
-    "method": "sign",
-    "params": {
-        "token": "xxxxxxxxxxxxxxxxxxxx",
-        "target": "LOCK_HASH",
-        "tx": TX_JSON,
-        "config": {
-            "index": 0,
-            "length": -1
-        },
-        "meta": "transaction meta info"
+  "id": "2",
+  "jsonrpc": "2.0",
+  "method": "sign_send",
+  "params": {
+    "token": "XXXXXXXXXXXXXXXX",
+    "description": "transaction description",
+    "tx": TX_JSON,
+    "lockHash": "XXXXXXXXXXXXXXXX",
+    "config": {
+      "index": 0,
+      "length": -1
     }
+  }
 }
 ```
 
@@ -143,53 +214,15 @@ config是可选的，默认值 `{"index": 0, "length": -1}` 代表全签。
 
 ```json
 {
-    "id": 2,
-    "jsonrpc": "2.0",
-    "result": {
-        "tx": TX_JSON_WITH_SIGNATURE
-    }
+  "id": 2,
+  "jsonrpc": "2.0",
+  "result": {
+    "tx": TX_JSON_WITH_SIGNATURE,
+    "txHash": "XXXXXXX"
+  }
 }
 ```
 
 * Errors
-  * 参考前面，code=1表示declined，code=2表示invalid_token
+  * 参考前面，code=1表示rejected，code=2表示invalid_token
 
-### Sign and Send
-
-签名并发送交易。
-
-- Request
-
-```json
-{
-    "id": 2,
-    "jsonrpc": "2.0",
-    "method": "sign_and_send",
-    "params": {
-        "token": "xxxxxxxxxxxxxxxxxxxx",
-        "target": "LOCK_HASH",
-        "tx": TX_JSON,
-        "config": {
-            "index": 0,
-            "length": -1
-        },
-        "meta": "transaction meta info"
-    }
-}
-```
-
-- Response
-
-```json
-{
-    "id": 2,
-    "jsonrpc": "2.0",
-    "result": {
-        "tx": TX_JSON_WITH_SIGNATURE,
-        "hash": TX_HASH
-    }
-}
-```
-
-* Errors
-  * 参考前面，code=1表示declined，code=2表示invalid_token
